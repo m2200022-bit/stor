@@ -6,7 +6,7 @@
 <title>نظام إدارة مخزن النوادي الثقافية</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#F4F5F7; --surface:#FFFFFF; --line:#E3E5E9; --line2:#EFF0F3;
@@ -310,6 +310,130 @@ tbody tr:hover{background:#FBFBFC}
   .page{padding:14px}
   .top{padding:10px 14px}
 }
+
+/* ===================== الهوية البصرية ===================== */
+:root{
+  --navy:#1f476b; --deep-navy:#193148; --dark-sidebar:#0e2537;
+  --brass:#d0a940; --light-gold:#ead9b1; --cream:#f5f1e8; --card-white:#fdfcf9;
+  --burgundy:#9a3e4d; --teal:#28677a; --green:#4d6d58; --brown:#9c693d;
+
+  --bg:var(--cream); --surface:var(--card-white);
+  --line:#e4ded2; --line2:#eee8dc;
+  --ink:#193044; --ink2:#4b5c68; --ink3:#66747a;
+  --side:var(--dark-sidebar); --side2:#183048; --side-ink:#e2dccd;
+  --gold:var(--brass); --gold-l:#f5ebd2; --gold-d:#85651c;
+  --ok:#286249; --ok-l:#e2efe7;
+  --warn:#85651c; --warn-l:#f5ebd2;
+  --dan:var(--burgundy); --dan-l:#f7e4e0;
+  --info:var(--teal); --info-l:#e2eef1;
+
+  --field:#fffdf8; --th-bg:#f3eee2; --hover:#faf7ef; --mf-bg:#faf7ef; --muted-bg:#ece6d9;
+  --r:16px; --r-sm:10px;
+  --shadow:0 5px 14px rgba(25,48,68,.05);
+  --shadow-md:0 12px 26px rgba(25,48,68,.09);
+  --shadow-lg:0 18px 40px rgba(25,48,68,.13);
+  --t:.28s cubic-bezier(.2,.7,.3,1);
+}
+.dark{
+  --bg:#0d1a24; --surface:#152634;
+  --line:#26404f; --line2:#1e3444;
+  --ink:#eee7d8; --ink2:#b6c2cb; --ink3:#93a2ac;
+  --side:#0a1620; --side2:#16293a; --side-ink:#e0dacb;
+  --gold:#dcb658; --gold-l:#3a3120; --gold-d:#e7c877;
+  --ok:#6fbf95; --ok-l:#1c3a2c;
+  --warn:#e0b968; --warn-l:#3a3120;
+  --dan:#d97b84; --dan-l:#3d2226;
+  --info:#63b6c9; --info-l:#173039;
+  --field:#122130; --th-bg:#1a2e3d; --hover:#182b3a; --mf-bg:#12212e; --muted-bg:#1c3040;
+  --shadow:0 5px 14px rgba(0,0,0,.35); --shadow-md:0 12px 26px rgba(0,0,0,.42);
+}
+body{font-family:'IBM Plex Sans Arabic','Tajawal',-apple-system,'Segoe UI',Tahoma,sans-serif;
+  background:var(--bg);color:var(--ink)}
+h1,h2,h3,.stat b,.auth-brand h1,.lgbrand h1{font-family:'Tajawal','IBM Plex Sans Arabic',sans-serif}
+.shell{position:relative;isolation:isolate}
+.shell:before{content:"";position:fixed;inset:0;z-index:50;pointer-events:none;opacity:.022;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E")}
+
+/* الأسطح */
+.card,.stat{background:var(--surface);border-color:var(--line);border-radius:var(--r);box-shadow:var(--shadow);
+  transition:transform var(--t),box-shadow var(--t)}
+.card:hover{box-shadow:var(--shadow-md)}
+.stat:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+table{background:var(--surface);color:var(--ink)}
+th{background:var(--th-bg);color:var(--ink2);border-bottom-color:var(--line)}
+td{border-bottom-color:var(--line2)}
+tbody tr{transition:background var(--t)}
+tbody tr:hover{background:var(--hover)}
+tr.red td{background:var(--dan-l)}
+input[type=text],input[type=password],input[type=number],input[type=date],input[type=tel],select,textarea{
+  background:var(--field);border-color:var(--line);color:var(--ink);border-radius:var(--r-sm);transition:border-color var(--t),box-shadow var(--t)}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(208,169,64,.18)}
+::placeholder{color:var(--ink3)}
+.modal{background:var(--surface);color:var(--ink);border-radius:var(--r)}
+.mh{border-bottom-color:var(--line2)} .mf{background:var(--mf-bg);border-top-color:var(--line2);border-radius:0 0 var(--r) var(--r)}
+.dd-menu{background:var(--surface);border-color:var(--line);border-radius:var(--r-sm)}
+.dd-menu button{color:var(--ink)} .dd-menu button:hover{background:var(--hover)}
+.tabs-auth,.lgtabs{background:var(--muted-bg)}
+.lgtabs button.on{background:var(--surface);color:var(--navy)}
+.lgcard{background:var(--surface);border-radius:var(--r)}
+.top{background:var(--surface);border-bottom-color:var(--line)}
+.side{background:var(--side);color:var(--side-ink)}
+.side-head,.side-foot{border-color:rgba(255,255,255,.08)}
+.gline:hover,.sub a:hover,.sub2 a:hover,.gline.on,.sub a.on,.sub2 a.on{background:var(--side2)}
+.gline.act .gi{color:var(--gold)}
+.navsearch input{background:var(--side2);border-color:rgba(255,255,255,.12);color:#f0ece1}
+.avatar{background:var(--gold-l);color:var(--gold-d)}
+.note{background:var(--gold-l);border-color:rgba(208,169,64,.45);color:var(--gold-d)}
+.note.dan{background:var(--dan-l);border-color:rgba(154,62,77,.4);color:var(--dan)}
+.note.info{background:var(--info-l);border-color:rgba(40,103,122,.35);color:var(--info)}
+.empty{color:var(--ink2)} .empty b{color:var(--ink)}
+
+/* الأزرار */
+.btn{border-radius:var(--r-sm);background:var(--navy);border-color:var(--navy);color:#f6f1e6;
+  box-shadow:0 6px 16px rgba(31,71,107,.15);transition:transform var(--t),background var(--t),box-shadow var(--t),filter var(--t)}
+.btn:hover{background:var(--navy);filter:brightness(1.12);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.btn:active{transform:translateY(0)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#231c08}
+.btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line);box-shadow:none}
+.btn.ghost:hover{background:var(--hover)}
+.btn.ok{background:var(--ok);border-color:var(--ok)}
+.btn.dan{background:var(--dan);border-color:var(--dan)}
+.btn:disabled{transform:none;box-shadow:none}
+.btn-out{border-radius:var(--r-sm)}
+.pill{border-radius:999px;padding:.3rem .7rem;font-weight:700}
+.p-ok{background:#e2efe7;color:#286249} .p-dan{background:#f7e4e0;color:#9b453e}
+.p-gold,.p-warn{background:#f5ebd2;color:#85651c}
+.dark .p-ok{background:#1c3a2c;color:#8fd3ae} .dark .p-dan{background:#3d2226;color:#eda3aa}
+.dark .p-gold,.dark .p-warn{background:#3a3120;color:#e7c877}
+.dark .p-info{background:#173039;color:#7fc9da} .dark .p-gray{background:#22323f;color:#c2ccd4}
+
+/* الحركات */
+.fade-up{animation:fade-up .45s ease both}
+@keyframes fade-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.modal{animation:modal-enter .25s ease both}
+@keyframes modal-enter{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.toast{animation:toast-enter .3s ease both;border-radius:var(--r-sm);background:var(--deep-navy)}
+.toast.ok{background:var(--ok)} .toast.dan{background:var(--dan)}
+@keyframes toast-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.side{transition:transform .3s ease}
+a,.gline,.sub a,.sub2 a,.pill,.ibtn{transition:color var(--t),background-color var(--t),border-color var(--t),
+  box-shadow var(--t),transform var(--t),opacity var(--t)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;
+  transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* شاشة الدخول */
+.lgw{background:#0e2537;background-image:
+  radial-gradient(1100px 620px at 78% -12%,rgba(31,71,107,.75),transparent 60%),
+  radial-gradient(760px 520px at 6% 106%,rgba(208,169,64,.22),transparent 62%),
+  linear-gradient(168deg,#0e2537 0%,#193148 58%,#0b1d2c 100%)}
+.lglogo{background:linear-gradient(145deg,var(--deep-navy),var(--navy));box-shadow:0 10px 22px rgba(14,37,55,.4)}
+.lgbtn{background:linear-gradient(135deg,var(--deep-navy),var(--navy));border-radius:var(--r-sm);
+  box-shadow:0 10px 22px rgba(31,71,107,.32);transition:transform var(--t),filter var(--t)}
+.lgbtn:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.theme-btn{background:none;border:1px solid var(--line);border-radius:var(--r-sm);cursor:pointer;
+  padding:6px 10px;color:var(--ink2);font-size:14px}
+.theme-btn:hover{background:var(--hover);color:var(--ink)}
+
 </style>
 </head>
 <body>
@@ -324,12 +448,12 @@ const ST={
   draft:'مسودة', new:'طلب جديد', review:'بانتظار مراجعة مدير المخزن', classify:'بانتظار التصنيف',
   approved:'معتمد', rejected:'مرفوض', keeper:'محال إلى أمين المخزن', buying:'بانتظار الشراء',
   bought:'تم الشراء بالكامل', bought_part:'تم الشراء جزئيًا', not_bought:'لم يتم الشراء',
-  received:'تم التوريد إلى المخزن', ready:'جاهز للصرف', issued_part:'تم الصرف جزئيًا',
+  received:'تم التوريد إلى المخزن', ready:'جاهز للصرف', to_keeper:'تم الإرسال للصرف', issued_part:'تم الصرف جزئيًا',
   issued:'تم الصرف بالكامل', await_return:'بانتظار إرجاع العهدة', returned:'تمت إعادة العهدة بالكامل',
   returned_short:'تمت إعادة العهدة بنواقص', closed:'مغلق'
 };
 const STCLR={draft:'p-gray',new:'p-info',review:'p-warn',classify:'p-warn',approved:'p-ok',rejected:'p-dan',
-  keeper:'p-info',buying:'p-warn',bought:'p-ok',bought_part:'p-warn',not_bought:'p-dan',received:'p-ok',
+  keeper:'p-info',buying:'p-warn',bought:'p-ok',bought_part:'p-warn',not_bought:'p-dan',received:'p-ok',to_keeper:'p-gold',
   ready:'p-gold',issued_part:'p-warn',issued:'p-ok',await_return:'p-warn',returned:'p-ok',returned_short:'p-warn',closed:'p-gray'};
 
 let S=null, ses=null, route='dash', sideOpen=false;
@@ -568,6 +692,7 @@ function assetById(id){return S.assets.find(a=>a.id===id)}
 let authTab='login';
 const LGICON=`<svg viewBox="0 0 24 24"><path d="M3 9.5 12 4l9 5.5"/><path d="M5 10v9h14v-9"/><path d="M9 19v-5h6v5"/></svg>`;
 function renderAuth(){
+  applyTheme();
   const app=document.getElementById('app');
   app.innerHTML=`<div class="lgw">
     <main class="lgcard">
@@ -724,11 +849,9 @@ const NAV=[
     {k:'moves',t:'الحركات',full:'حركة المخزون',roles:['keeper','manager','admin']}
   ]},
   {key:'orders',g:'الطلبات',icon:'&#128722;',items:[
-    {k:'',t:'طلب جديد',roles:['club','admin'],children:[
-      {k:'purchase',t:'طلب شراء',full:'طلب شراء موحّد',roles:['club','admin']},
-      {k:'newasset',t:'طلب مواد ثابتة',full:'طلب أصول ثابتة (عهدة)',roles:['club','admin']},
-      {k:'newcons',t:'طلب مواد استهلاكية',full:'طلب مواد استهلاكية',roles:['club','admin']}
-    ]},
+    {k:'purchase',t:'طلب شراء',full:'طلب شراء موحّد',roles:['club','admin']},
+    {k:'newasset',t:'طلب مواد ثابتة',full:'طلب أصول ثابتة (عهدة)',roles:['club','admin']},
+    {k:'newcons',t:'طلب مواد استهلاكية',full:'طلب مواد استهلاكية',roles:['club','admin']},
     {k:'reqs',t:'متابعة الطلبات',full:'متابعة الطلبات',roles:['club','keeper','manager','admin'],count:'reqs'}
   ]},
   {key:'logs',g:'السجلات',icon:'&#128203;',items:[
@@ -853,7 +976,103 @@ function pageTitle(){
   for(const g of NAV)for(const i of navItems(g))if(i.k===route)return i.full||i.t;
   return 'النظام';
 }
+let theme=(function(){try{return localStorage.getItem('wh_theme')||'light'}catch(e){return 'light'}})();
+function applyTheme(){document.documentElement.classList.toggle('dark',theme==='dark')}
+async function refreshNow(){
+  const b=document.getElementById('refreshBtn');
+  if(b){b.disabled=true;b.style.opacity=.5}
+  let got=false;
+  try{ if(fbOn())got=await cloudPull(true); }catch(e){}
+  runAlerts();save();render();
+  toast(got?'حُدّثت البيانات من السحابة':'حُدّثت الصفحة','ok');
+}
+/* ================= البحث الشامل ================= */
+function gsMatch(t,q){return String(t||'').toLowerCase().includes(q)}
+function globalSearch(q){
+  q=String(q||'').trim().toLowerCase();
+  if(q.length<2)return null;
+  const club=ses.role==='club';
+  const res={pages:[],items:[],assets:[],reqs:[],vouchers:[],custody:[],clubs:[],users:[]};
+  NAV.forEach(g=>navItems(g).forEach(i=>{
+    if(!i.k||!navOk(i.roles))return;
+    if(gsMatch(i.t,q)||gsMatch(i.full,q)||gsMatch(g.g,q))
+      res.pages.push({t:(i.full||i.t),sub:g.g,fn:`go('${i.k}')`});
+  }));
+  S.items.forEach(i=>{if(gsMatch(i.name,q)||gsMatch(i.code,q)||gsMatch(i.cat,q))
+    res.items.push({t:i.name,sub:i.code+' · '+i.cat+' · الرصيد '+i.qty+(i.shelf?' · '+i.shelf:''),
+      fn:club?`go('newcons')`:`go('cons')`})});
+  S.assets.forEach(a=>{if(gsMatch(a.name,q)||gsMatch(a.code,q)||gsMatch(a.cat,q)||gsMatch(a.barcode,q))
+    res.assets.push({t:a.name,sub:a.code+' · '+a.cat+' · داخل المخزن '+a.qty+(a.shelf?' · '+a.shelf:''),
+      fn:club?`go('newasset')`:`go('assets')`})});
+  scopedReqs().forEach(r=>{
+    if(gsMatch(r.no,q)||gsMatch(clubName(r.clubId),q)||r.lines.some(l=>gsMatch(l.name,q))||gsMatch(ST[r.status],q))
+      res.reqs.push({t:r.no+' — '+kindName(r.kind),sub:clubName(r.clubId)+' · '+ST[r.status]+' · '+fmtD(r.dates.created),
+        fn:`openReq('${r.id}')`})});
+  scopedVou().forEach(v=>{
+    if(gsMatch(v.no,q)||gsMatch(v.reqNo,q)||gsMatch(clubName(v.clubId),q)||v.lines.some(l=>gsMatch(l.name,q)))
+      res.vouchers.push({t:v.no+' — '+vTypeName(v.type),sub:clubName(v.clubId)+' · '+fmtD(v.date),
+        fn:`viewVoucher('${v.id}')`})});
+  scopedCust().forEach(c=>{
+    if(gsMatch(c.no,q)||gsMatch(c.assetName,q)||gsMatch(c.assetCode,q)||gsMatch(clubName(c.clubId),q))
+      res.custody.push({t:c.assetName+' — '+c.no,sub:clubName(c.clubId)+' · المتبقي '+custRemain(c),
+        fn:`F.q='${(c.no||'').replace(/'/g,'')}';go('custody')`})});
+  if(!club){
+    S.clubs.forEach(c=>{if(gsMatch(c.name,q))
+      res.clubs.push({t:c.name,sub:(c.frozen?'مجمّد عن الطلبات':'يستطيع الطلب')+' · عهد قائمة '+
+        S.custody.filter(x=>x.clubId===c.id&&x.status==='open').length,fn:`F.club='${c.id}';go('custody')`})});
+    if(can('manager'))S.users.forEach(u=>{if(gsMatch(u.fullName,q)||gsMatch(u.username,q))
+      res.users.push({t:u.fullName,sub:ROLES[u.role]+' · '+u.username,fn:`userLog('${u.id}')`})});
+  }
+  return res;
+}
+function searchModal(){
+  modal(`<div class="modal lg"><div class="mh"><h3>بحث شامل في النظام</h3><button onclick="closeModal()">&times;</button></div>
+  <div class="mb">
+    <div class="field"><input id="gs_q" type="text" autocomplete="off"
+      placeholder="اكتب اسم صنف أو رقم طلب أو سند أو نادٍ أو صفحة…" oninput="renderGS()"
+      onkeydown="if(event.key==='Escape')closeModal()"></div>
+    <div id="gs_res"><div class="empty"><b>اكتب حرفين على الأقل</b>
+      يبحث النظام في الصفحات والمواد والأصول والطلبات والسندات والعهد والنوادي والمستخدمين.</div></div>
+  </div>
+  <div class="mf"><button class="btn ghost" onclick="closeModal()">إغلاق</button></div></div>`);
+  const e=document.getElementById('gs_q'); if(e)e.focus();
+}
+function renderGS(){
+  const q=(document.getElementById('gs_q')||{}).value||'';
+  const box=document.getElementById('gs_res');
+  const r=globalSearch(q);
+  if(!r){box.innerHTML=`<div class="empty"><b>اكتب حرفين على الأقل</b>يبحث النظام في كل أقسام النظام.</div>`;return}
+  const sec=(title,list,icon)=>{
+    if(!list.length)return '';
+    return `<div class="sec-title">${icon} ${title} (${list.length})</div>
+      <div class="card" style="margin-bottom:10px"><div class="card-b" style="padding:6px">
+      ${list.slice(0,8).map(x=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;cursor:pointer"
+        onmouseover="this.style.background='var(--hover)'" onmouseout="this.style.background=''"
+        onclick="closeModal();${x.fn}">
+        <div style="flex:1"><div style="font-weight:700">${h(x.t)}</div>
+        <div style="font-size:12.5px;color:var(--ink3)">${h(x.sub)}</div></div>
+        <span style="color:var(--ink3)">&#8249;</span></div>`).join('')}
+      ${list.length>8?`<div style="padding:6px 10px;color:var(--ink3);font-size:12.5px">و${list.length-8} نتيجة أخرى…</div>`:''}
+      </div></div>`;
+  };
+  const total=Object.keys(r).reduce((a,k)=>a+r[k].length,0);
+  box.innerHTML=total?(
+    sec('الصفحات',r.pages,'&#128196;')+sec('المواد الاستهلاكية',r.items,'&#128230;')+
+    sec('الأصول الثابتة',r.assets,'&#127959;')+sec('الطلبات',r.reqs,'&#128722;')+
+    sec('السندات',r.vouchers,'&#128209;')+sec('العهد',r.custody,'&#128273;')+
+    sec('النوادي',r.clubs,'&#127963;')+sec('المستخدمون',r.users,'&#128100;')
+  ):`<div class="empty"><b>لا توجد نتائج مطابقة</b>جرّب كلمة أو رقمًا آخر.</div>`;
+  arabize(box);
+}
+function toggleTheme(){
+  theme=theme==='dark'?'light':'dark';
+  try{localStorage.setItem('wh_theme',theme)}catch(e){}
+  applyTheme();
+  const b=document.getElementById('themeBtn');
+  if(b)b.innerHTML=theme==='dark'?'&#9728;':'&#9789;';
+}
 function render(){
+  applyTheme();
   if(!ses)return renderAuth();
   const app=document.getElementById('app');
   app.innerHTML=`<div class="shell">
@@ -876,6 +1095,10 @@ function render(){
           <span id="syncChip">${syncChip()}</span>
           <div style="text-align:left"><div style="font-weight:700;color:var(--ink)">${h(ses.fullName)}</div>
           <div>${h(ROLES[ses.role])}${ses.clubId?' · '+h(clubName(ses.clubId)):''}</div></div>
+          <button class="theme-btn" title="بحث شامل في النظام" onclick="searchModal()">&#128269;</button>
+          <button class="theme-btn" id="refreshBtn" title="تحديث البيانات دون الخروج" onclick="refreshNow()">&#8635;</button>
+          <button class="theme-btn" id="themeBtn" title="الوضع الليلي / النهاري"
+            onclick="toggleTheme()">${theme==='dark'?'&#9728;':'&#9789;'}</button>
           ${(ses.role==='admin'||ses.origRole)?`<button class="btn ghost sm" title="التنقل بين الأدوار"
             onclick="switchRoleModal()">&#8646; الأدوار</button>`:''}
           ${ses.origRole?`<button class="btn gold sm" onclick="backToSelf()">عودة لمدير النظام</button>`:''}
@@ -902,6 +1125,7 @@ function renderPage(){
     reports:pgReports,quota:pgQuota,trail:pgTrail,newcons:pgNewCons,newasset:pgNewAsset,
     msgs:pgMsgs,users:pgUsers,settings:pgSettings};
   p.innerHTML=(map[route]||pgDash)();
+  p.classList.remove('fade-up');void p.offsetWidth;p.classList.add('fade-up');
   arabize(p);
 }
 
@@ -1865,9 +2089,9 @@ function reqClubGroups(list){
 }
 function railFor(r){
   const steps=r.kind==='purchase'
-    ?[['أُنشئ',true],['تصنيف واعتماد',['approved','keeper','buying','bought','bought_part','received','ready','issued','issued_part','closed'].includes(r.status)],
-      ['شراء',['bought','bought_part','received','ready','issued','issued_part','closed'].includes(r.status)],
-      ['توريد',['received','ready','issued','issued_part','closed'].includes(r.status)],
+    ?[['أُنشئ',true],['تصنيف واعتماد',['approved','keeper','buying','bought','bought_part','received','ready','to_keeper','issued','issued_part','closed'].includes(r.status)],
+      ['شراء',['bought','bought_part','received','ready','to_keeper','issued','issued_part','closed'].includes(r.status)],
+      ['توريد',['received','ready','to_keeper','issued','issued_part','closed'].includes(r.status)],
       ['صرف',['issued','issued_part','closed'].includes(r.status)],['إغلاق',r.status==='closed']]
     :[['أُنشئ',true],['اعتماد',['approved','keeper','ready','issued','issued_part','closed','await_return','returned','returned_short'].includes(r.status)],
       ['إحالة لأمين المخزن',['keeper','ready','issued','issued_part','closed','await_return','returned','returned_short'].includes(r.status)],
@@ -1889,22 +2113,22 @@ function reqActions(r){
   if(r.kind==='purchase'){
     if(can('manager','supervisor')&&['keeper','buying'].includes(r.status))
       a.push({t:'اعتماد وحفظ الشراء',fn:`buyModal('${r.id}')`,cls:'gold'});
-    if(can('manager','keeper')&&['bought','bought_part'].includes(r.status))
+    if(can('manager','keeper')&&['bought','bought_part','to_keeper'].includes(r.status))
       a.push({t:'تسجيل التوريد',fn:`grnModal('${r.id}')`,cls:'gold'});
   }
   /* الصرف: مدير المخزن فقط */
   const isSup=ses&&ses.role==='supervisor';
   if(can('manager','keeper')&&!isSup){
-    if(r.kind==='purchase'&&['received','ready','issued_part'].includes(r.status))
+    if(r.kind==='purchase'&&['received','ready','issued_part','to_keeper'].includes(r.status))
       a.push({t:'صرف للنادي',fn:`issueModal('${r.id}')`,cls:'gold'});
-    if(r.kind!=='purchase'&&['keeper','approved','ready','issued_part'].includes(r.status))
+    if(r.kind!=='purchase'&&['keeper','approved','ready','issued_part','to_keeper'].includes(r.status))
       a.push({t:'صرف للنادي',fn:`issueModal('${r.id}')`,cls:'gold'});
   }
-  if(isSup&&['received','ready','issued_part','keeper','approved'].includes(r.status))
+  if(isSup&&['keeper','approved','issued_part'].includes(r.status))
     a.push({t:'إرسال للمخزن للصرف',fn:`sendToKeeper('${r.id}')`,cls:'gold'});
   if(can('manager','supervisor')&&['keeper','approved','buying'].includes(r.status))
     a.push({t:'رفض الطلب',fn:`rejectReq('${r.id}')`,cls:'dan'});
-  if(can('manager','supervisor')&&['bought','bought_part'].includes(r.status))
+  if(can('manager','supervisor')&&['bought','bought_part','received','ready'].includes(r.status))
     a.push({t:'إرسال للمخزن للصرف',fn:`sendToKeeper('${r.id}')`,cls:'gold'});
   if(can('manager','keeper')&&['issued','not_bought','returned','returned_short'].includes(r.status))
     a.push({t:'إغلاق الطلب',fn:`closeReq('${r.id}')`,cls:'ghost'});
@@ -1933,6 +2157,8 @@ function openReq(id){
   modal(`<div class="modal lg"><div class="mh"><h3>طلب ${h(r.no)} — ${h(kindName(r.kind))}</h3><button onclick="closeModal()">&times;</button></div>
   <div class="mb">
     ${railFor(r)}
+    ${r.status==='to_keeper'?`<div class="note" style="margin:10px 0"><b>تم الإرسال للصرف.</b>
+      الطلب لدى أمين المخزن لاستكمال التوريد إن لزم ثم الصرف للنادي.</div>`:''}
     ${['bought','bought_part'].includes(r.status)?`<div class="note dan" style="margin:10px 0">
       <b>تم الشراء.</b> أخبر أمين المخزن واضغط «تسجيل التوريد» ليُدخل الصنف إلى المخزن ويصبح جاهزًا للصرف.</div>`:''}
     ${r.fromStock&&r.fromStock.length?`<div class="note info" style="margin:10px 0">
@@ -2128,9 +2354,9 @@ function bulkClose(){
 function sendToKeeper(id){
   const r=S.reqs.find(x=>x.id===id);
   confirmBox('إرسال للمخزن للصرف','سيُحال الطلب '+r.no+' إلى أمين المخزن لاستكمال التوريد والصرف.',()=>{
-    r.toKeeperAt=nowISO();
-    hist(r,'أُحيل الطلب إلى أمين المخزن بعد الشراء');
-    logIt('إحالة إلى أمين المخزن','طلب',r.no,'',ST[r.status]);
+    r.toKeeperAt=nowISO();r.prevStatus=r.status;r.status='to_keeper';
+    hist(r,'أُرسل الطلب إلى المخزن للصرف');
+    logIt('إرسال للمخزن للصرف','طلب',r.no,ST[r.prevStatus]||'',ST['to_keeper']);
     notify('طلب '+r.no+' جاهز لديك بعد الشراء — أكمل التوريد أو الصرف','keeper');
     notify('أُحيل الطلب '+r.no+' إلى أمين المخزن','manager');
     save();renderPage();toast('أُحيل الطلب إلى أمين المخزن','ok');
@@ -2725,6 +2951,13 @@ function pgCustody(){
   const list=tab==='open'?open:tab==='back'?back:tab==='stuck'?stuck:all;
   const tabBtn=(k,t,n,cls)=>`<button class="btn ${F.ctab===k||(!F.ctab&&k==='open')?'gold':'ghost'} sm"
     onclick="F.ctab='${k}';renderPage()">${t} <span class="pill ${cls||'p-gray'}">${n}</span></button>`;
+  const pend=can('manager','keeper')?kitPendingClubs():[];
+  const kitRecv=pend.length?`<div class="card" style="margin-bottom:14px;border-color:#F0C9C5">
+    <div class="card-h" style="background:#FDF2F1"><h3>حقائب بانتظار الاستلام</h3>
+    <span class="pill p-dan">${pend.length}</span></div>
+    <div class="card-b" style="padding-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+      ${pend.map(id=>`<button class="btn dan sm" onclick="kitReceiveModal('${id}')">استلام حقيبة ${h(clubName(id))} كاملة</button>`).join('')}
+    </div></div>`:'';
   const kitBox=(ses.role==='club'&&kitOut(ses.clubId).length)?`
     <div class="card" style="margin-bottom:14px;border-color:#F0C9C5"><div class="card-h" style="background:#FDF2F1">
       <h3>${h(kitDef().name)}</h3><span class="pill p-dan">في عهدة ناديكم</span>
@@ -2733,7 +2966,7 @@ function pgCustody(){
       ${kitOut(ses.clubId).map(c=>`<span class="pill p-gray">${h(c.assetName)} — المتبقي ${custRemain(c)}</span>`).join('')}
     </div></div></div>`:'';
   const body=tab==='club'?clubGroups(all):custTable(list);
-  return `${kitBox}<div class="toolbar">
+  return `${kitRecv}${kitBox}<div class="toolbar">
     <input class="grow" type="text" placeholder="بحث برقم السند أو الأصل" value="${h(F.q)}" oninput="F.q=this.value;renderPage()">
     ${ses.role!=='club'?`<select onchange="setF('club',this.value)"><option value="">كل النوادي</option>
       ${S.clubs.map(c=>`<option value="${c.id}" ${F.club===c.id?'selected':''}>${h(c.name)}</option>`).join('')}</select>`:''}
@@ -2758,9 +2991,13 @@ function custTable(list,idAttr){
     <td>${fmtD(c.dueAt)} ${late(c)?'<span class="pill p-dan">متأخرة</span>':''}</td>
     <td>${custPill(c)}${c.rejectNote?`<div style="font-size:11.5px" class="red-txt">${h(c.rejectNote)}</div>`:''}</td>
     <td style="display:flex;gap:6px;flex-wrap:wrap">
-      ${ses.role==='club'&&c.status==='open'&&!c.returnReq&&!c.rejectNote&&custRemain(c)>0?`<button class="btn ghost sm" onclick="askReturn('${c.id}')">طلب إرجاع</button>`:''}
+      ${ses.role==='club'&&c.status==='open'&&!c.returnReq&&!c.rejectNote&&custRemain(c)>0?
+        (c.kit?`<button class="btn dan sm" onclick="kitReturnModal()">إرجاع الحقيبة كاملة</button>`
+             :`<button class="btn ghost sm" onclick="askReturn('${c.id}')">طلب إرجاع</button>`):''}
       ${ses.role==='club'&&c.rejectNote?`<button class="btn dan sm" onclick="clubReasonModal('${c.id}')">ذكر السبب</button>`:''}
-      ${can('manager','keeper')&&c.returnReq?`<button class="btn gold sm" onclick="returnModal('${c.id}')">استلام الإرجاع</button>`:''}
+      ${can('manager','keeper')&&c.returnReq?(c.kit
+        ?`<button class="btn dan sm" onclick="kitReceiveModal('${c.clubId}')">استلام الحقيبة كاملة</button>`
+        :`<button class="btn gold sm" onclick="returnModal('${c.id}')">استلام الإرجاع</button>`):''}
       ${can('manager','keeper')&&c.dmgPending>0?`<button class="btn dan sm" onclick="damageModal('${c.id}')">قرار التالف</button>`:''}
       <button class="btn ghost sm" onclick="viewVoucher('${c.voucherId}')">سند الخروج</button>
       ${c.retVoucher?`<button class="btn ghost sm" onclick="viewVoucher('${c.retVoucher}')">سند الإرجاع</button>`:''}
@@ -2788,51 +3025,117 @@ function clubGroups(all){
         <td><button class="btn ghost sm" onclick="F.club='${id}';F.ctab='open';renderPage()">عرض عهد النادي</button></td></tr>`;
     }).join('')}</tbody></table>`;
 }
-/* --- إرجاع الحقيبة الدائمة دفعة واحدة --- */
+/* --- إرجاع حقيبة النادي كوحدة واحدة --- */
+function kitCustodyOf(clubId){
+  return S.custody.filter(c=>c.kit&&c.clubId===clubId&&c.status==='open'&&custRemain(c)>0);
+}
 function kitReturnModal(){
-  const out=kitOut(ses.clubId);
+  const out=kitCustodyOf(ses.clubId);
   if(!out.length)return toast('لا توجد حقيبة في عهدة ناديكم','dan');
-  modal(`<div class="modal"><div class="mh"><h3>إرجاع ${h(kitDef().name)}</h3><button onclick="closeModal()">&times;</button></div>
-  <div class="mb"><div class="note">أدخل الكمية السليمة والتالفة لكل مادة. الكمية المعادة تنقص تلقائيًا بمقدار التالف.</div>
-    <div class="tw" style="margin-top:12px"><table><thead><tr><th class="nos">المادة</th><th class="nos">المتبقي</th>
-      <th class="nos">تالف/ضائع</th><th class="nos">المعادة سليمة</th></tr></thead>
-      <tbody>${out.map(c=>{const rem=custRemain(c);return `<tr><td>${h(c.assetName)}</td><td class="mono">${rem}</td>
-        <td><input type="number" min="0" max="${rem}" id="kd_${c.id}" value="0" style="width:90px"
+  modal(`<div class="modal"><div class="mh"><h3>إرجاع ${h(kitDef().name)} كاملة</h3><button onclick="closeModal()">&times;</button></div>
+  <div class="mb">
+    <div class="note dan">الحقيبة تُرجَع كوحدة واحدة كما صُرفت، ولا تُجزّأ. يتحقق أمين المخزن من محتوياتها عند الاستلام.</div>
+    <div class="tw" style="margin-top:12px"><table><thead><tr><th class="nos">محتوى الحقيبة</th>
+      <th class="nos">المصروف</th><th class="nos">المطلوب إرجاعه</th></tr></thead>
+      <tbody>${out.map(c=>`<tr><td>${h(c.assetName)}</td><td class="mono">${c.qty}</td>
+        <td class="mono" style="font-weight:800">${custRemain(c)}</td></tr>`).join('')}</tbody>
+      <tfoot><tr><td>الإجمالي</td><td class="mono">${out.reduce((a,c)=>a+c.qty,0)}</td>
+        <td class="mono">${out.reduce((a,c)=>a+custRemain(c),0)}</td></tr></tfoot></table></div>
+    <div class="field" style="margin-top:12px"><label>ملاحظات النادي عند الإرجاع</label>
+      <textarea id="k_note" style="min-height:100px" placeholder="اختياري — أي ملاحظة على الحقيبة"></textarea></div>
+  </div>
+  <div class="mf"><button class="btn gold" onclick="submitKitReturn()">إرسال طلب إرجاع الحقيبة كاملة</button>
+  <button class="btn ghost" onclick="closeModal()">إلغاء</button></div></div>`);
+}
+function submitKitReturn(){
+  const out=kitCustodyOf(ses.clubId),note=(document.getElementById('k_note').value||'').trim();
+  if(!out.length)return toast('لا توجد حقيبة في العهدة','dan');
+  out.forEach(c=>{
+    c.returnReq=true;c.reqQty=custRemain(c);c.reqDmg=0;c.reqNote=note;c.returnReqAt=nowISO();c.rejectNote='';
+  });
+  notify('طلب إرجاع '+kitDef().name+' كاملة من '+clubName(ses.clubId),'keeper');
+  notify('طلب إرجاع '+kitDef().name+' كاملة من '+clubName(ses.clubId),'manager');
+  logIt('طلب إرجاع الحقيبة','عهدة',kitDef().name,'',out.length+' مادة',note);
+  save();closeModal();renderPage();toast('أُرسل طلب إرجاع الحقيبة كاملة','ok');
+}
+function kitPendingClubs(){
+  const ids=[...new Set(S.custody.filter(c=>c.kit&&c.returnReq&&c.status==='open').map(c=>c.clubId))];
+  return ids;
+}
+function kitReceiveModal(clubId){
+  if(!can('manager','keeper'))return toast('الاستلام من صلاحية أمين المخزن أو المدير','dan');
+  const out=S.custody.filter(c=>c.kit&&c.clubId===clubId&&c.status==='open'&&custRemain(c)>0);
+  if(!out.length)return toast('لا توجد حقيبة قائمة على هذا النادي','dan');
+  modal(`<div class="modal lg"><div class="mh"><h3>استلام ${h(kitDef().name)} — ${h(clubName(clubId))}</h3>
+    <button onclick="closeModal()">&times;</button></div>
+  <div class="mb">
+    <div class="note">تحقّق من محتويات الحقيبة قبل الاعتماد. المفقود أو التالف يُسجَّل هنا ويبقى عالقًا على النادي حتى صدور قرار،
+      وما عداه يعود إلى المخزن دفعة واحدة بسند إرجاع واحد للحقيبة.</div>
+    <div class="tw" style="margin-top:12px"><table><thead><tr><th class="nos">المحتوى</th><th class="nos">المصروف</th>
+      <th class="nos">المطلوب إرجاعه</th><th class="nos">تالف/مفقود</th><th class="nos">المستلم سليم</th></tr></thead>
+      <tbody>${out.map(c=>{const rem=custRemain(c);return `<tr><td>${h(c.assetName)}</td><td class="mono">${c.qty}</td>
+        <td class="mono">${rem}</td>
+        <td><input type="number" min="0" max="${rem}" id="kd_${c.id}" value="${c.reqDmg||0}" class="numbig" style="width:100px"
           oninput="kitRowSync('${c.id}',${rem})"></td>
-        <td><input type="number" min="0" max="${rem}" id="kq_${c.id}" value="${rem}" style="width:90px"></td></tr>`}).join('')}
+        <td><input type="number" min="0" max="${rem}" id="kq_${c.id}" value="${rem-(c.reqDmg||0)}" class="numbig" style="width:100px"></td></tr>`}).join('')}
       </tbody></table></div>
-    <div class="field" style="margin-top:12px"><label>بيان التالف أو الضائع</label>
-      <textarea id="k_note" style="min-height:120px" placeholder="إلزامي عند وجود تالف أو ضائع"></textarea></div></div>
-  <div class="mf"><button class="btn gold" onclick="submitKitReturn()">إرسال طلب إرجاع الحقيبة</button>
+    <div class="row" style="margin-top:12px">
+      <div class="field"><label>اسم مستلم العهدة (مشرف النادي)</label><input id="kr_by" value="${h(clubOfficer(clubId))}"></div>
+      <div class="field"><label>اسم أمين المخزن</label><input id="kr_kp" value="${h(keeperName())}"></div>
+      <div class="field"><label>تاريخ الاستلام</label><input id="kr_d" type="date" lang="en" value="${today()}"></div>
+    </div>
+    <div class="field"><label>ملاحظات التحقق من المحتويات</label>
+      <textarea id="kr_n" style="min-height:100px" placeholder="إلزامي عند وجود نقص أو تالف">${h((out[0]||{}).reqNote||'')}</textarea></div>
+  </div>
+  <div class="mf"><button class="btn gold" onclick="saveKitReceive('${clubId}')">اعتماد استلام الحقيبة وإصدار السند</button>
   <button class="btn ghost" onclick="closeModal()">إلغاء</button></div></div>`);
 }
 function kitRowSync(id,rem){
   const d=num(document.getElementById('kd_'+id).value);
   document.getElementById('kq_'+id).value=Math.max(0,rem-d);
 }
-function submitKitReturn(){
-  const out=kitOut(ses.clubId),note=(document.getElementById('k_note').value||'').trim();
-  let anyDmg=false,n=0;
+function saveKitReceive(clubId){
+  if(!can('manager','keeper'))return toast('الاستلام من صلاحية أمين المخزن أو المدير','dan');
+  const out=S.custody.filter(c=>c.kit&&c.clubId===clubId&&c.status==='open'&&custRemain(c)>0);
+  const by=(document.getElementById('kr_by').value||'').trim(),kp=(document.getElementById('kr_kp').value||'').trim(),
+        d=document.getElementById('kr_d').value,nt=(document.getElementById('kr_n').value||'').trim();
+  if(!by||!kp)return toast('اسم مستلم العهدة واسم أمين المخزن إلزاميان','dan');
+  let anyDmg=false;
   for(const c of out){
-    const d=num(document.getElementById('kd_'+c.id).value),q=num(document.getElementById('kq_'+c.id).value);
-    if(d>0)anyDmg=true;
-    if(q+d>custRemain(c))return toast('كمية أكبر من المتبقي في: '+c.assetName,'dan');
+    const rem=custRemain(c),dmg=num(document.getElementById('kd_'+c.id).value),q=num(document.getElementById('kq_'+c.id).value);
+    if(dmg+q>rem)return toast('الكميات أكبر من المتبقي في: '+c.assetName,'dan');
+    if(dmg+q<rem)return toast('الحقيبة تُستلم كاملة — أكمل كميات: '+c.assetName+' (سليم + تالف = '+rem+')','dan');
+    if(dmg>0)anyDmg=true;
   }
-  if(anyDmg&&!note)return toast('اكتب بيان التالف أو الضائع','dan');
-  for(const c of out){
-    const d=num(document.getElementById('kd_'+c.id).value),q=num(document.getElementById('kq_'+c.id).value);
-    if(q+d<=0)continue;
-    c.returnReq=true;c.reqQty=q;c.reqDmg=d;c.reqNote=note;c.returnReqAt=nowISO();c.rejectNote='';n++;
-  }
-  if(!n)return toast('أدخل كميات الإرجاع','dan');
-  notify('طلب إرجاع '+kitDef().name+' من '+clubName(ses.clubId)+(anyDmg?' — يتضمن تالف/ضائع':''),'keeper');
-  notify('طلب إرجاع '+kitDef().name+' من '+clubName(ses.clubId),'manager');
-  logIt('طلب إرجاع الحقيبة','عهدة',kitDef().name,'',n+' مادة',note);
-  save();closeModal();renderPage();toast('أُرسل طلب إرجاع الحقيبة','ok');
+  if(anyDmg&&!nt)return toast('اكتب ملاحظات التحقق وبيان التالف أو المفقود','dan');
+  const dISO=d?new Date(d).toISOString():nowISO();
+  const lines=[];
+  out.forEach(c=>{
+    const rem=custRemain(c),dmg=num(document.getElementById('kd_'+c.id).value),q=rem-dmg;
+    const a=assetById(c.assetId);
+    if(q>0&&a){const before=a.qty;a.qty+=q;
+      addMove('إرجاع حقيبة','أصل ثابت',a.name,q,before,a.qty,nt,c.no,clubId);}
+    c.retQty=(c.retQty||0)+q;
+    c.dmgPending=(c.dmgPending||0)+dmg;
+    c.retDate=dISO;c.receivedBy=by;c.keeperName=kp;c.returnReq=false;c.reqQty=0;c.reqDmg=0;c.cond=dmg?'بها نقص':'سليمة';
+    lines.push({name:c.assetName,code:c.assetCode,unit:a?a.unit:'حبة',qty:c.qty,qty2:q,qty3:dmg,
+      cond:dmg?'تالف/مفقود '+dmg:'سليم',notes:dmg?nt:''});
+  });
+  const r=S.reqs.find(x=>x.id===out[0].reqId);
+  const v=mkVoucher('AR',r||{id:null,no:'',clubId},lines,
+    {receiver:by,keeper:kp,date:dISO,clubId,notes:'إرجاع '+kitDef().name+' كوحدة واحدة'+(nt?' — '+nt:'')});
+  out.forEach(c=>{c.retVoucher=v.id;refreshCustStatus(c)});
+  logIt('استلام حقيبة','سند',v.no,'',out.length+' مادة',nt);
+  notify('استُلمت '+kitDef().name+' من '+clubName(clubId)+' بسند '+v.no,'manager');
+  notify('سُجّل إرجاع الحقيبة بسند '+v.no,'club',clubId);
+  if(anyDmg)notify('حقيبة '+clubName(clubId)+' بها تالف أو مفقود بانتظار القرار','manager');
+  save();closeModal();renderPage();
+  toast(anyDmg?'استُلمت الحقيبة والنقص عالق بانتظار القرار':'استُلمت الحقيبة كاملة وصدر السند '+v.no,'ok');
 }
 /* --- طلب الإرجاع من النادي --- */
 function askReturn(id){
   const c=S.custody.find(x=>x.id===id);const rem=custRemain(c);
+  if(c.kit)return kitReturnModal();
   modal(`<div class="modal"><div class="mh"><h3>طلب إرجاع عهدة — ${h(c.assetName)}</h3><button onclick="closeModal()">&times;</button></div>
   <div class="mb">
     <div class="kv" style="margin-bottom:14px"><b>سند الخروج</b><span class="mono">${h(c.no)}</span>
@@ -2898,6 +3201,7 @@ function saveClubReason(id){
 function returnModal(id){
   if(!can('manager','keeper'))return toast('هذا الإجراء من صلاحية أمين المخزن أو المدير','dan');
   const c=S.custody.find(x=>x.id===id);
+  if(c&&c.kit)return kitReceiveModal(c.clubId);
   if(!c.returnReq)return toast('لا يوجد طلب إرجاع مقدَّم لهذه العهدة','dan');
   const rem=custRemain(c);
   modal(`<div class="modal"><div class="mh"><h3>استلام إرجاع عهدة — ${h(c.assetName)}</h3><button onclick="closeModal()">&times;</button></div>
@@ -4411,7 +4715,10 @@ document.addEventListener('click',e=>{
   });
   rows.forEach(r=>tb.tBodies[0].appendChild(r));
 });
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeModal();
+  if(ses&&(e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();searchModal()}
+});
 
 /* ================= المزامنة السحابية (Firestore REST) ================= */
 let SY={state:'idle',last:null,err:'',busy:false,timer:null,pushT:null};
@@ -4669,6 +4976,7 @@ if(!S.kits||!S.kits.length)S.kits=[{id:uid(),name:'حقيبة النادي ال�
   {name:'صافرة',qty:2},{name:'كرة قدم',qty:2},{name:'منفاخ',qty:1},{name:'حقيبة اسعافات',qty:1}]}];
 S.custody.forEach(c=>{c.dmgPending=c.dmgPending||0;c.dmgDone=c.dmgDone||0});
 save();
+applyTheme();
 renderAuth();
 startSync();
 </script>
