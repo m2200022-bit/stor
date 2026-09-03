@@ -667,6 +667,7 @@ function doRegister(){
   notify('طلب تسجيل جديد من '+n+' — '+clubName(c),'manager');
   notify('طلب تسجيل جديد من '+n+' — '+clubName(c),'keeper');
   save();
+  if(fbOn())cloudPush(true).then(ok=>{if(!ok)toast('لم تُرفع بيانات الطلب إلى السحابة: '+SY.err,'dan')});
   const wa=(S.settings.whatsapp||'55486292').replace(/[^0-9]/g,'');
   modal(`<div class="modal sm"><div class="mh"><h3>أُرسل طلب التسجيل</h3><button onclick="closeModal()">&times;</button></div>
   <div class="mb"><div class="note" style="background:#F1FCF4;border-color:#39FF14;color:#14532D">
@@ -4508,6 +4509,40 @@ function packState(){
   const c={};Object.keys(S).forEach(k=>{c[k]=S[k]});
   return JSON.stringify(c);
 }
+const SYNC_COLS=['users','clubs','items','assets','reqs','vouchers','custody','damages','msgs',
+  'audits','moves','log','notes','logins','resets','locations','kits'];
+function mergeArr(a,b,preferB){
+  const map=new Map();
+  (a||[]).forEach(x=>{if(x&&x.id)map.set(x.id,x)});
+  (b||[]).forEach(x=>{
+    if(!x||!x.id)return;
+    if(!map.has(x.id)||preferB)map.set(x.id,x);
+  });
+  return [...map.values()];
+}
+function sortState(o){
+  const byTs=(x,y)=>String(y.ts||'').localeCompare(String(x.ts||''));
+  ['log','notes','moves','logins','resets','damages','msgs'].forEach(k=>{if(o[k])o[k].sort(byTs)});
+  if(o.reqs)o.reqs.sort((x,y)=>String((y.dates||{}).created||'').localeCompare(String((x.dates||{}).created||'')));
+  if(o.vouchers)o.vouchers.sort((x,y)=>String(y.date||'').localeCompare(String(x.date||'')));
+  if(o.audits)o.audits.sort((x,y)=>String(y.date||'').localeCompare(String(x.date||'')));
+  return o;
+}
+/* دمج نسختين بدل استبدال إحداهما، حتى لا تضيع تسجيلات أو طلبات جهاز آخر */
+function mergeStates(local,remote,preferRemote){
+  const base=preferRemote?Object.assign({},local,remote):Object.assign({},remote,local);
+  SYNC_COLS.forEach(k=>{base[k]=mergeArr(local[k],remote[k],preferRemote)});
+  base.seq={};
+  [local.seq||{},remote.seq||{}].forEach(sq=>Object.keys(sq).forEach(pfx=>{
+    base.seq[pfx]=base.seq[pfx]||{};
+    Object.keys(sq[pfx]||{}).forEach(y=>{base.seq[pfx][y]=Math.max(num(base.seq[pfx][y]),num(sq[pfx][y]))});
+  }));
+  base.quota=Object.assign({},local.quota||{},remote.quota||{});
+  base.clsMap=Object.assign({},local.clsMap||{},remote.clsMap||{});
+  base.imports=Object.assign({},local.imports||{},remote.imports||{});
+  base.settings=preferRemote?(remote.settings||local.settings):(local.settings||remote.settings);
+  return sortState(base);
+}
 function applyRemote(obj){
   const keepSes=ses?ses.id:null;
   S=obj;
@@ -4527,7 +4562,8 @@ async function cloudPull(silent){
     const rev=parseInt((f.rev&&f.rev.integerValue)||'0',10);
     const data=(f.data&&f.data.stringValue)||'';
     if(data&&rev>(S.rev||0)){
-      const obj=JSON.parse(data);
+      const obj=mergeStates(S,JSON.parse(data),true);
+      obj.rev=rev;
       applyRemote(obj);
       SY.busy=false;setSync('ok');
       if(!silent){toast('حُدّثت البيانات من السحابة','ok')}
@@ -4542,6 +4578,21 @@ async function cloudPush(force){
   if(SY.busy&&!force)return false;
   SY.busy=true;setSync('push');
   try{
+    /* اقرأ الأحدث أولًا وادمج تغييراتك فوقه حتى لا تُمحى بيانات جهاز آخر */
+    try{
+      const rr=await fetch(fbUrl(),{headers:await fbHeaders()});
+      if(rr.ok){
+        const jj=await rr.json();
+        const ff=(jj.fields||{});
+        const rrev=parseInt((ff.rev&&ff.rev.integerValue)||'0',10);
+        const rdata=(ff.data&&ff.data.stringValue)||'';
+        if(rdata&&rrev>(S.rev||0)){
+          const merged=mergeStates(S,JSON.parse(rdata),false);
+          merged.rev=rrev;
+          S=merged;
+        }
+      }
+    }catch(e){}
     S.rev=(S.rev||0)+1;
     const body={fields:{data:{stringValue:packState()},rev:{integerValue:String(S.rev)},
       updatedAt:{stringValue:nowISO()},updatedBy:{stringValue:ses?ses.fullName:'—'}}};
