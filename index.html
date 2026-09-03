@@ -495,7 +495,7 @@ function seed(){
     settings:{orgName:'إدارة النوادي الثقافية',warehouse:'المخزن المركزي',dueDays:14,support:'تحويلة 1234',
       appName:'نظام إدارة مخزن النوادي الثقافية',logo:'',whatsapp:'55486292',
       fb:{enabled:true,apiKey:'AIzaSyAYn7DzTC03I7Q_My7xuJD33ELQwwuhe84',projectId:'droub-55931',
-          doc:'warehouse/state',poll:15,auth:true,domain:'droub.local'}}
+          doc:'warehouse/state',poll:15,auth:false,domain:'droub.local'}}
   };
 }
 
@@ -620,7 +620,9 @@ function regForm(){
       ${S.clubs.map(c=>`<option value="${c.id}">${h(c.name)}</option>`).join('')}
       <option value="__new">+ إضافة نادٍ جديد</option></select></div>
     <div id="rcnew" style="display:none;margin-top:8px">
-      <div class="lgin"><span class="ic">&#10133;</span><input id="rcname" type="text" placeholder="اسم النادي الجديد"></div></div></div>
+      <div class="lghint" style="background:#FBEFED;border-color:#F0C9C5;color:#8A1F19">
+        قم بالتواصل مع المشرف لإضافة النادي أولًا، ثم اختره من القائمة.
+        ${S.settings.whatsapp?`<br>واتساب المشرف: <b>${h(S.settings.whatsapp)}</b>`:''}</div></div></div>
   <div class="lgf"><label for="ru">اسم المستخدم المطلوب</label>
     <div class="lgin"><span class="ic">&#9997;</span><input id="ru" type="text" placeholder="اسم المستخدم"></div></div>
   <div class="lgf"><label for="rw">كلمة المرور</label>
@@ -650,14 +652,7 @@ function doLogin(){
   const rem=document.getElementById('lgrem');
   try{ if(rem&&rem.checked)localStorage.setItem('wh_remember',u); else localStorage.removeItem('wh_remember'); }catch(e){}
   ses=usr; route='dash'; logIt('تسجيل دخول','مستخدم',usr.username); runAlerts(); save(); render();
-  if(fbOn()&&fbCfg().auth){
-    fbSignIn(usr.username,p).then(ok=>{
-      if(!ok&&AU.err&&!AU.warned){AU.warned=true;
-        toast('تعذّرت مصادقة السحابة: '+AU.err,'dan');}
-      const el=document.getElementById('syncChip'); if(el)el.innerHTML=syncChip();
-      startSync();
-    });
-  } else startSync();
+  startSync();
 }
 function doRegister(){
   const n=document.getElementById('rn').value.trim(),p=document.getElementById('rp').value.trim(),
@@ -667,14 +662,7 @@ function doRegister(){
   if(!/^[0-9]{8}$/.test(p))return toast('رقم الهاتف يجب أن يكون 8 أرقام','dan');
   if(w.length<6)return toast('كلمة المرور 6 أحرف على الأقل','dan');
   if(S.users.some(x=>x.username===u))return toast('اسم المستخدم مستخدم مسبقًا، اختر غيره','dan');
-  if(c==='__new'){
-    const nm=(document.getElementById('rcname').value||'').trim();
-    if(!nm)return toast('اكتب اسم النادي الجديد','dan');
-    const ex=S.clubs.find(x=>x.name===nm);
-    if(ex)c=ex.id; else{const nc={id:uid(),name:nm,active:true};S.clubs.push(nc);c=nc.id;
-      logIt('إضافة نادٍ','نادٍ',nm,'','من شاشة التسجيل');
-      notify('أُضيف نادٍ جديد من شاشة التسجيل: '+nm,'manager');}
-  }
+  if(c==='__new')return toast('قم بالتواصل مع المشرف لإضافة النادي أولًا','dan');
   S.users.push({id:uid(),fullName:n,username:u,pass:w,role:'club',clubId:c,phone:p,status:'pending',createdAt:nowISO()});
   notify('طلب تسجيل جديد من '+n+' — '+clubName(c),'manager');
   notify('طلب تسجيل جديد من '+n+' — '+clubName(c),'keeper');
@@ -761,6 +749,7 @@ const NAV=[
   ]}
 ];
 function navCount(kind){
+  if(ses&&ses.role==='club')return 0;
   if(kind==='reqs'){
     const rs=scopedReqs();
     if(ses.role==='club')return rs.filter(r=>!['closed','rejected'].includes(r.status)).length;
@@ -1084,7 +1073,7 @@ function consOrderView(){
     <td>${i.qty>0?`<input type="number" min="1" max="${i.qty}" id="q_${i.id}" disabled style="width:92px">`
       :`<span class="pill p-dan">غير متوفرة</span>`}</td>
     <td><input type="text" id="n_${i.id}" placeholder="ملاحظة" disabled></td></tr>`).join('');
-  return `${frozenBanner()}${windowBanner()}
+  return `${frozenBanner()}${windowBanner()}${kitBtn()}
   <div class="note info" style="margin-bottom:14px">المواد الاستهلاكية تُصرف ولا تُسجّل عهدة على النادي ولا يُطلب إرجاعها. إذا لم تجد المادة، أنشئ
     <a onclick="go('purchase')" style="cursor:pointer;font-weight:700">طلب شراء</a>.</div>
   <div class="card"><div class="card-h"><h3>طلب مواد استهلاكية من المخزن</h3>
@@ -1461,14 +1450,7 @@ function assetOrderView(){
   const mine=S.custody.filter(c=>c.clubId===ses.clubId&&c.status==='open');
   return `${frozenBanner()}${windowBanner()}
   <div class="note" style="margin-bottom:14px">الأصول الثابتة تُصرف عهدة على النادي ويجب إرجاعها. الأصل المصروف لا يظهر ضمن الرصيد المتاح حتى يُرجَع.</div>
-  <div class="card" style="margin-bottom:14px;border-color:#F0C9C5"><div class="card-h" style="background:#FDF2F1">
-    <h3>${h(kitDef().name)}</h3>
-    <span class="pill ${kshort.length?'p-dan':'p-ok'}">${kshort.length?'ناقصة '+kshort.length+' مادة':'مكتملة'}</span>
-    ${kitOut(ses.clubId).length?'<span class="pill p-dan">تم طلبها ولا تزال في العهدة</span>':''}
-    <button class="btn dan sm" style="margin-inline-start:auto" onclick="kitModal()">طلب الحقيبة</button></div>
-  <div class="card-b" style="padding-top:10px">
-    <div style="display:flex;gap:8px;flex-wrap:wrap">${kst.map(x=>`<span class="pill ${x.short?'p-dan':'p-gray'}">${h(x.name)} ${x.need}${x.short?` — ناقص ${x.short}`:''}</span>`).join('')}</div>
-  </div></div>
+  ${kitBtn()}
   ${mine.length?`<div class="card" style="margin-bottom:14px"><div class="card-h"><h3>عهد مسجّلة على ناديك (${mine.length})</h3>
     <button class="btn ghost sm" style="margin-inline-start:auto" onclick="go('custody')">إدارة العهد وطلب الإرجاع</button></div></div>`:''}
   <div class="card"><div class="card-h"><h3>طلب أصول ثابتة (عهدة)</h3>
@@ -1621,7 +1603,7 @@ function saveAsset(id){
 function pgPurchase(){
   if(ses.role!=='club')return `<div class="card"><div class="empty"><b>طلبات الشراء تُنشأ من حساب النادي</b>
     راجع صفحة الطلبات لمتابعة طلبات الشراء الواردة ومعالجتها.</div></div>`;
-  return `${frozenBanner()}${windowBanner()}
+  return `${frozenBanner()}${windowBanner()}${kitBtn()}
   <div class="card" style="margin-bottom:14px"><div class="card-h"><h3>طلب شراء موحّد</h3></div>
   <div class="card-b">
     <div class="field"><label>ملاحظات عامة على الطلب</label>
@@ -3068,6 +3050,22 @@ function saveDamage(id){
 }
 /* --- حقيبة النادي الدائمة --- */
 function kitDef(){return S.kits[0]}
+function kitBtn(){
+  if(ses.role!=='club')return '';
+  const out=kitOut(ses.clubId);
+  const froz=!!out.length;
+  return `<div class="card" style="margin-bottom:14px;border-color:#F0C9C5">
+    <div class="card-h" style="background:#FDF2F1">
+      <h3>${h(kitDef().name)}</h3>
+      ${froz?'<span class="pill p-dan">مطلوبة سابقًا ولا تزال في العهدة</span>':'<span class="pill p-ok">متاحة للطلب</span>'}
+      <button class="btn ${froz?'ghost':'dan'} sm" style="margin-inline-start:auto" ${froz?'disabled':''}
+        onclick="${froz?'':'kitModal()'}">طلب حقيبة النادي الثابتة</button></div>
+    ${froz?`<div class="card-b" style="padding-top:10px"><div class="note dan" style="margin:0">
+      الأيقونة مجمّدة حتى تُرجَع الحقيبة. المتبقي عليكم:
+      ${out.map(c=>h(c.assetName)+' ('+custRemain(c)+')').join(' · ')}
+      <button class="btn ghost sm" style="margin-inline-start:8px" onclick="go('custody')">إرجاع الحقيبة</button></div></div>`:''}
+  </div>`;
+}
 function kitOut(clubId){
   return S.custody.filter(c=>c.kit&&c.clubId===clubId&&c.status==='open'&&custRemain(c)>0);
 }
@@ -3113,12 +3111,13 @@ function kitModal(){
       تُصرف الحقيبة بالمتوفر ويُسجّل النقص، ويمكنك إنشاء طلب شراء للإدارة بالنواقص.</div>`
       :`<div class="note info" style="margin-top:14px">جميع مواد الحقيبة متوفرة، وستُخصم من رصيد الأصول الثابتة عند الصرف.</div>`}
   </div>
-  <div class="mf"><button class="btn gold" onclick="submitKit()">إرسال طلب الحقيبة</button>
+  <div class="mf"><button class="btn gold" onclick="submitKit()">إرسال طلب حقيبة النادي الثابتة</button>
   ${short.length?`<button class="btn dan" onclick="kitPurchase()">إنشاء طلب شراء بالنواقص</button>`:''}
   <button class="btn ghost" onclick="closeModal()">إلغاء</button></div></div>`);
 }
 function submitKit(){
   if(ses.role==='club'&&!clubCanOrder())return;
+  if(kitOut(ses.clubId).length)return toast('حقيبة النادي لا تزال في عهدتكم — لا يمكن طلبها قبل إرجاعها','dan');
   const st=kitStatus();
   const lines=[];
   st.forEach(x=>{
@@ -3473,23 +3472,13 @@ function pgSettings(){
         <div class="field"><label>مفتاح الويب (apiKey)</label><input id="fb_key" value="${h(fbCfg().apiKey||'')}"></div>
         <div class="field"><label>مسار المستند</label><input id="fb_doc" value="${h(fbCfg().doc||'warehouse/state')}"></div>
         <div class="field"><label>فترة التحديث (ثانية)</label><input id="fb_poll" type="number" min="5" value="${num(fbCfg().poll)||15}"></div>
-        <div class="field"><label>مصادقة Firebase</label>
-          <select id="fb_auth"><option value="1" ${fbCfg().auth?'selected':''}>مفعّلة (موصى بها)</option>
-            <option value="0" ${!fbCfg().auth?'selected':''}>متوقفة</option></select></div>
-        <div class="field"><label>نطاق حسابات الدخول</label><input id="fb_dom" value="${h(fbCfg().domain||'droub.local')}"></div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="btn gold" onclick="saveFb()">حفظ إعدادات المزامنة</button>
         <button class="btn ghost" onclick="syncNow()">مزامنة الآن</button>
         <button class="btn ghost" onclick="cloudPull().then(g=>toast(g?'حُدّثت البيانات من السحابة':'لا يوجد أحدث من نسختك','ok'))">تنزيل من السحابة</button>
         <button class="btn ghost" onclick="cloudPush(true).then(o=>toast(o?'رُفعت البيانات':'تعذّر الرفع: '+SY.err,o?'ok':'dan'))">رفع إلى السحابة</button>
-        <button class="btn ghost" onclick="testAuth()">اختبار المصادقة</button>
       </div>
-      <div class="note ${fbCfg().auth&&AU.idToken?'info':''}" style="margin-top:12px">
-        حالة المصادقة: <b>${fbCfg().auth?(AU.idToken?'موثّق باسم '+h(AU.email):'غير موثّق'):'متوقفة'}</b>
-        ${AU.err?`<br><span class="red-txt">${h(AU.err)}</span>`:''}
-        <br>يُنشئ النظام لكل مستخدم حساب Firebase باسم <b>اسم_المستخدم@${h(fbCfg().domain||'droub.local')}</b> بنفس كلمة مروره،
-        فتُقبل الكتابة بقاعدة <b>request.auth != null</b>. يلزم تفعيل موفّر البريد وكلمة المرور في Firebase Authentication.</div>
       <div class="note info" style="margin-top:12px">تُحفظ البيانات في مستند واحد داخل Firestore وتتزامن كل
         ${num(fbCfg().poll)||15} ثانية بين جميع الأجهزة. آخر مزامنة: <b>${SY.last?fmtDT(SY.last):'—'}</b>
         ${SY.err?`<br><span class="red-txt">آخر خطأ: ${h(SY.err)}</span>`:''}
@@ -3732,7 +3721,7 @@ function saveFb(){
   const g=x=>document.getElementById(x).value;
   S.settings.fb={enabled:g('fb_on')==='1',projectId:g('fb_pid').trim(),apiKey:g('fb_key').trim(),
     doc:g('fb_doc').trim()||'warehouse/state',poll:num(g('fb_poll'))||15,
-    auth:g('fb_auth')==='1',domain:g('fb_dom').trim()||'droub.local'};
+    auth:false,domain:'droub.local'};
   logIt('تعديل إعدادات المزامنة','إعدادات',S.settings.fb.projectId,'','');
   save();startSync();renderPage();toast('حُفظت إعدادات المزامنة','ok');
 }
@@ -4590,8 +4579,8 @@ if(!S.settings.support)S.settings.support='تحويلة 1234';
 if(!S.settings.appName)S.settings.appName='نظام إدارة مخزن النوادي الثقافية';
 if(!S.settings.whatsapp)S.settings.whatsapp='55486292';
 if(!S.settings.fb)S.settings.fb={enabled:true,apiKey:'AIzaSyAYn7DzTC03I7Q_My7xuJD33ELQwwuhe84',
-  projectId:'droub-55931',doc:'warehouse/state',poll:15,auth:true,domain:'droub.local'};
-if(S.settings.fb.auth===undefined)S.settings.fb.auth=true;
+  projectId:'droub-55931',doc:'warehouse/state',poll:15,auth:false,domain:'droub.local'};
+S.settings.fb.auth=false;
 if(!S.settings.fb.domain)S.settings.fb.domain='droub.local';
 if(typeof S.rev!=='number')S.rev=0;
 if(!S.damages)S.damages=[];
